@@ -1,0 +1,73 @@
+﻿@model IEnumerable<test2.Models.Account>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+</head>
+<body>
+
+    <h2>Accounts</h2>
+
+    <!-- Форма для ввода ExcelFileId -->
+    <form method="get" action="/Account/Index">
+        <label for="excelFileId">Enter Excel File ID:</label>
+        <input type="number" id="excelFileId" name="excelFileId" required />
+        <button type="submit">Submit</button>
+    </form>
+
+    <br />
+
+    <table id="accountTable" class="display">
+        <thead>
+            <tr>
+                <th style="padding-right: 20px;">Id</th>
+                <th style="padding-left: 20px;">Account Id</th>
+                <th>Opening Balance Active</th>
+                <th>Opening Balance Passive</th>
+                <th>Closing Balance Active</th>
+                <th>Closing Balance Passive</th>
+                <th>Debet</th>
+                <th>Credit</th>
+                <th>Bank Id</th>
+                <th>Class Of Transaction Number</th>
+                <th>Excel File Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var account in Model)
+            {
+                <tr>
+                    <td>@account.Id</td>
+                    <td>@account.AccountId</td>
+                    <td>@account.OpeningBalanceActive</td>
+                    <td>@account.OpeningBalancePassive</td>
+                    <td>@account.ClosingBalanceActive</td>
+                    <td>@account.ClosingBalancePassive</td>
+                    <td>@account.Debet</td>
+                    <td>@account.Credit</td>
+                    <td>@account.BankId</td>
+                    <td>@account.ClassOfTransactionNumber</td>
+                    <td>@account.ExcelFileId</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <br />
+    <!-- Кнопка для загрузки таблицы в txt -->
+    <form method="post" action="/Account/DownloadTxt">
+        <input type="hidden" name="excelFileId" value="@ViewBag.ExcelFileId" />
+        <button type="submit">Download as TXT</button>
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            $('#accountTable').DataTable();
+        });
+    </script>
+
+</body>
+</html>
